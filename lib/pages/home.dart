@@ -5,6 +5,7 @@ import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/model/login_model.dart';
 import '../progressHUD.dart';
 import 'artwork.dart';
+import 'artwork_new.dart';
 
 String newToken;
 
@@ -69,11 +70,11 @@ class _HomeState extends State<Home> {
               },
             ),
             new ListTile(
-              title: new Text('Page Two'),
+              title: new Text('Add New Artwork'),
               trailing: new Icon(Icons.surround_sound),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ArtworkPage('Second Page')));
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new ArtworkNew()));
               },
             ),
             new ListTile(

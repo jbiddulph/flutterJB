@@ -8,6 +8,7 @@ class Artwork {
   final String primary_art;
   final int height;
   final int width;
+  final int cost;
   final int live;
   final int created_by;
   final String created_at;
@@ -21,11 +22,14 @@ class Artwork {
     @required this.primary_art,
     @required this.height,
     @required this.width,
+    @required this.cost,
     @required this.live,
     @required this.created_by,
     @required this.created_at,
     @required this.updated_at, 
     });
+
+
 
   factory Artwork.fromJson(Map<String, dynamic> json) {
     return Artwork(
@@ -36,10 +40,51 @@ class Artwork {
       primary_art: json['primary_art'] as String,
       height: json['height'] as int,
       width: json['width'] as int,
+      cost: json['cost'] as int,
       live: json['live'] as int,
       created_by: json['created_by'] as int,
       created_at: json['created_at'] as String,
       updated_at: json['updated_at'] as String,
     );
+  }
+}
+
+class ArtworkRequestModel {
+  String title;
+  String description;
+  String status;
+  String primary_art;
+  int height;
+  int width;
+  int cost;
+  int live;
+  int created_by;
+
+  ArtworkRequestModel({
+    this.title, 
+    this.description,
+    this.status,
+    this.primary_art,
+    this.height,
+    this.width,
+    this.cost,
+    this.live,
+    this.created_by,
+  });
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      'title': title.trim(), 
+      'description': description.trim(),
+      'status': status,
+      'primary_art': primary_art.trim(),
+      'height': height,
+      'width': width,
+      'cost': cost,
+      'live': live,
+      'created_by': created_by,
+    };
+
+    return map;
   }
 }

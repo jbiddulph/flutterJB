@@ -64,7 +64,6 @@ class APIService {
       });
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
-
       List<Artwork> posts = body
         .map(
           (dynamic item) => Artwork.fromJson(item),
@@ -74,6 +73,44 @@ class APIService {
       return posts;
     } else {
       throw "Unable to retrieve posts.";
+    }
+  }
+  // DELETE ARTWORK
+  Future<void> deleteArtwork(int id) async {
+    String endpoint = "/api/artworks/$id";
+    String newToken = await storage.read(key: 'token');
+  final response = await http.delete(Uri.http(url, endpoint),
+    headers: <String, String>{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $newToken',
+      });
+    if (response.statusCode == 200) {
+      print("DELETED");
+    } else {
+      throw "Unable to delete post.";
+    }
+  }
+
+  Future<Artwork> addNewArtwork(ArtworkRequestModel artworkRequestModel) async {
+    String endpoint = "/api/artworks";
+    String newToken = await storage.read(key: 'token');
+    final response = await http.post(
+      Uri.http(url, endpoint),
+      headers: <String, String>{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $newToken',
+      },
+      body: jsonEncode(artworkRequestModel)
+    );
+    print(artworkRequestModel);
+    
+
+    if(response.statusCode == 200 || response.statusCode == 400) {
+      return Artwork.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load data');
     }
   }
 }

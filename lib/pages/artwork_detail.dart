@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjb/api/api_service.dart';
 import '../model/artwork_model.dart';
 
 class ArtworkDetail extends StatelessWidget {
+  
+  APIService httpService = new APIService();
   final Artwork artwork;
 
   ArtworkDetail({@required this.artwork});
@@ -11,6 +14,15 @@ class ArtworkDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(artwork.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () async {
+              await httpService.deleteArtwork(artwork.id);
+              Navigator.of(context).pop();
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
