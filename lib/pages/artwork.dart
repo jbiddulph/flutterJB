@@ -34,6 +34,9 @@ class _ArtworkPageState extends State<ArtworkPage> {
               children: artworks
                   .map(
                     (Artwork artwork) => ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage("${artwork.primary_art}")
+                      ),
                       title: Text(artwork.title),
                       subtitle: Text("${artwork.description}"),
                       onTap: () => Navigator.of(context).push(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjb/api/api_service.dart';
+import 'package:flutterjb/pages/home.dart';
 import '../model/artwork_model.dart';
 
 class ArtworkDetail extends StatelessWidget {
@@ -20,6 +21,10 @@ class ArtworkDetail extends StatelessWidget {
             onPressed: () async {
               await httpService.deleteArtwork(artwork.id);
               Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Home()),
+              );
             },
           )
         ],

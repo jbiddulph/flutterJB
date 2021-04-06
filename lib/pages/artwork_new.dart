@@ -49,7 +49,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                margin: EdgeInsets.symmetric(vertical:85, horizontal: 20),
+                margin: EdgeInsets.symmetric(vertical:30, horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Theme.of(context).primaryColor,
@@ -302,27 +302,20 @@ class _ArtworkNewState extends State<ArtworkNew> {
                                   
                               APIService apiService = new APIService();
                               apiService.addNewArtwork(artworkRequestModel).then((value) async {
-                                if (value != null) {
-                                  setState(() {
-                                    isApiCallProcess = false;
-                                  });
-                                  
-                                  if (value != null) {
-                                    final snackBar = SnackBar(
-                                        content: Text('here'));
-                                      scaffoldKey.currentState
-                                        .showSnackBar(snackBar);
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => Home()),
-                                        );
-                                  } else {
-                                    final snackBar =
-                                        SnackBar(content: Text('There has been an error'));
+                                setState(() {
+                                  isApiCallProcess = false;
+                                });
+                                
+                                
+                                  final snackBar = SnackBar(
+                                      content: Text('here'));
                                     scaffoldKey.currentState
-                                        .showSnackBar(snackBar);
-                                  }
-                                }
+                                      .showSnackBar(snackBar);
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Home()),
+                                      );
+                                
                               });
 
                         }

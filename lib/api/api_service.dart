@@ -8,11 +8,12 @@ import 'dart:convert';
 
 class APIService {
   String url = "lookwhatfound.me";
+  // c
   final storage = new FlutterSecureStorage();
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     String endpoint = "/api/auth/login";
     final response = await http.post(
-      Uri.http(url, endpoint),
+      Uri.https(url, endpoint),
       headers: <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -34,7 +35,7 @@ class APIService {
   Future<RegisterResponseModel> register(RegisterRequestModel registerRequestModel) async {
     String endpoint = "/api/auth/register";
     final response = await http.post(
-      Uri.http(url, endpoint),
+      Uri.https(url, endpoint),
       headers: <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -56,7 +57,7 @@ class APIService {
   Future<List<Artwork>> fetchArtwork() async {
     String endpoint = "/api/artworks";
     String newToken = await storage.read(key: 'token');
-  final response = await http.get(Uri.http(url, endpoint),
+  final response = await http.get(Uri.https(url, endpoint),
     headers: <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -79,7 +80,7 @@ class APIService {
   Future<void> deleteArtwork(int id) async {
     String endpoint = "/api/artworks/$id";
     String newToken = await storage.read(key: 'token');
-  final response = await http.delete(Uri.http(url, endpoint),
+  final response = await http.delete(Uri.https(url, endpoint),
     headers: <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -96,7 +97,7 @@ class APIService {
     String endpoint = "/api/artworks";
     String newToken = await storage.read(key: 'token');
     final response = await http.post(
-      Uri.http(url, endpoint),
+      Uri.https(url, endpoint),
       headers: <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
@@ -108,7 +109,9 @@ class APIService {
     
 
     if(response.statusCode == 200 || response.statusCode == 400) {
-      return Artwork.fromJson(json.decode(response.body));
+      if (json.decode(response.body)['token'] != null) {
+        return Artwork.fromJson(json.decode(response.body));
+      }
     } else {
       throw Exception('Failed to load data');
     }
