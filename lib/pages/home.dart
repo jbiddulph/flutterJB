@@ -12,7 +12,6 @@ import 'artwork_new.dart';
 final _storage = FlutterSecureStorage();
 
 String newToken;
-String profileId;
 
 String profileCreatedAt;
 
@@ -25,6 +24,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String profileName;
   String profileEmail;
+  String profileId;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   LoginRequestModel loginRequestModel;
@@ -47,9 +47,6 @@ class _HomeState extends State<Home> {
       profileEmail = profileemail;
       profileId = profileid;
     });
-    print(profileName);
-    print(profileEmail);
-    // print(profileId);
   }
 
   @override

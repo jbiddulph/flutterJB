@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/model/artwork_model.dart';
+import 'package:flutterjb/utils/user_secure_storage.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
@@ -19,6 +20,9 @@ class ArtworkNew extends StatefulWidget {
 }
 
 class _ArtworkNewState extends State<ArtworkNew> {
+  String profileName;
+  String profileEmail;
+  String profileId;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   ArtworkRequestModel artworkRequestModel;
@@ -28,7 +32,22 @@ class _ArtworkNewState extends State<ArtworkNew> {
   @override
   void initState() {
     super.initState();
+    init();
     artworkRequestModel = new ArtworkRequestModel();
+  }
+
+  Future init() async {
+    final profilename = await UserSecureStorage.getProfileName() ?? '';
+    final profileemail = await UserSecureStorage.getProfileEmail() ?? '';
+    final profileid = await UserSecureStorage.getProfileId() ?? '';
+    setState(() {
+      profileName = profilename;
+      profileEmail = profileemail;
+      profileId = profileid;
+    });
+    print(profileName);
+    print(profileEmail);
+    print(profileId);
   }
 
   @override
@@ -127,8 +146,8 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             ),
                             new TextFormField(
                               keyboardType: TextInputType.text,
-                              onSaved: (input) =>
-                                  artworkRequestModel.description = input,
+                              onSaved: (imageUrl) =>
+                                  artworkRequestModel.description = imageUrl,
                               validator: (input) => input.length < 10
                                   ? "Please add a bit more "
                                   : null,
@@ -179,14 +198,15 @@ class _ArtworkNewState extends State<ArtworkNew> {
                               height: 20,
                             ),
                             new TextFormField(
+                              initialValue: imageUrl,
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  artworkRequestModel.primary_art = input,
-                              validator: (input) => input.length < 10
-                                  ? "Please add a bit more "
-                                  : null,
+                                  artworkRequestModel.primary_art = imageUrl,
+                              // validator: (input) => input.length < 10
+                              //     ? "Please add a bit more "
+                              //     : null,
                               decoration: new InputDecoration(
-                                hintText: 'Artwork URL',
+                                hintText: imageUrl,
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Theme.of(context)
@@ -309,9 +329,9 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (input) => artworkRequestModel
-                                  .created_by = int.parse(input),
+                                  .created_by = int.parse(profileId),
                               decoration: new InputDecoration(
-                                hintText: 'Created_By',
+                                hintText: '$profileId',
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Theme.of(context)
@@ -402,18 +422,18 @@ class _ArtworkNewState extends State<ArtworkNew> {
       "file": await MultipartFile.fromFile(
         image.path,
       ),
-      "upload_preset": "choosapi",
+      "upload_preset": "choosday",
       "cloud_name": "defb2mzmx",
     });
     try {
       Response response = await dio.post(url, data: formData);
 
-      var data = jsonDecode(response.toString());
-      print(data['secure_url']);
+      final imageData = jsonDecode(response.toString());
+      print(imageData['secure_url']);
 
       setState(() {
         isloading = false;
-        imageUrl = data['secure_url'];
+        imageUrl = imageData['secure_url'];
       });
     } catch (e) {
       print(e);
