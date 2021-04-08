@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutterjb/api/api_service.dart';
-import 'package:flutterjb/model/artwork_model.dart';
+import 'package:flutterjb/model/myfinds_model.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -11,21 +11,21 @@ import 'package:dio/dio.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 
-import '../progressHUD.dart';
-import 'home.dart';
+import '../../progressHUD.dart';
+import '../home.dart';
 
-class ArtworkNew extends StatefulWidget {
+class MyfindsNew extends StatefulWidget {
   @override
-  _ArtworkNewState createState() => _ArtworkNewState();
+  _MyfindsNewState createState() => _MyfindsNewState();
 }
 
-class _ArtworkNewState extends State<ArtworkNew> {
+class _MyfindsNewState extends State<MyfindsNew> {
   String profileName;
   String profileEmail;
   String profileId;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
-  ArtworkRequestModel artworkRequestModel;
+  MyfindsRequestModel myfindsRequestModel;
   bool isApiCallProcess = false;
   final storage = new FlutterSecureStorage();
 
@@ -33,7 +33,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
   void initState() {
     super.initState();
     init();
-    artworkRequestModel = new ArtworkRequestModel();
+    myfindsRequestModel = new MyfindsRequestModel();
   }
 
   Future init() async {
@@ -63,9 +63,9 @@ class _ArtworkNewState extends State<ArtworkNew> {
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title:
-            const Text('Add New Find', style: TextStyle(color: Colors.white)),
+        title: Text('Add New Find', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.redAccent,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       key: scaffoldKey,
       backgroundColor: Theme.of(context).accentColor,
@@ -119,7 +119,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                           children: <Widget>[
                             SizedBox(height: 25),
                             Text(
-                              'Add new artwork',
+                              'Add new find',
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(
@@ -128,12 +128,12 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  artworkRequestModel.title = input,
+                                  myfindsRequestModel.title = input,
                               validator: (input) => input.isEmpty
                                   ? "Please enter a title "
                                   : null,
                               decoration: new InputDecoration(
-                                  hintText: 'Title your artwork',
+                                  hintText: 'Title your find',
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Theme.of(context)
@@ -155,7 +155,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (imageUrl) =>
-                                  artworkRequestModel.description = imageUrl,
+                                  myfindsRequestModel.description = imageUrl,
                               validator: (input) => input.length < 10
                                   ? "Please add a bit more "
                                   : null,
@@ -183,7 +183,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  artworkRequestModel.status = input,
+                                  myfindsRequestModel.status = input,
                               decoration: new InputDecoration(
                                 hintText: 'Status 1/0',
                                 enabledBorder: UnderlineInputBorder(
@@ -209,7 +209,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                               initialValue: imageUrl,
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  artworkRequestModel.primary_art = imageUrl,
+                                  myfindsRequestModel.primary_art = imageUrl,
                               // validator: (input) => input.length < 10
                               //     ? "Please add a bit more "
                               //     : null,
@@ -237,7 +237,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  artworkRequestModel.height = int.parse(input),
+                                  myfindsRequestModel.height = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Height',
                                 enabledBorder: UnderlineInputBorder(
@@ -262,7 +262,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  artworkRequestModel.width = int.parse(input),
+                                  myfindsRequestModel.width = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Width',
                                 enabledBorder: UnderlineInputBorder(
@@ -287,7 +287,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  artworkRequestModel.cost = int.parse(input),
+                                  myfindsRequestModel.cost = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Cost',
                                 enabledBorder: UnderlineInputBorder(
@@ -312,7 +312,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  artworkRequestModel.live = int.parse(input),
+                                  myfindsRequestModel.live = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Live 1/0',
                                 enabledBorder: UnderlineInputBorder(
@@ -336,7 +336,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                             ),
                             new TextFormField(
                               keyboardType: TextInputType.text,
-                              onSaved: (input) => artworkRequestModel
+                              onSaved: (input) => myfindsRequestModel
                                   .created_by = int.parse(profileId),
                               decoration: new InputDecoration(
                                 hintText: '$profileId',
@@ -366,7 +366,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                               ),
                               onPressed: () {
                                 if (validateAndSave()) {
-                                  print(artworkRequestModel.toJson());
+                                  print(myfindsRequestModel.toJson());
 
                                   setState(() {
                                     isApiCallProcess = true;
@@ -374,7 +374,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
 
                                   APIService apiService = new APIService();
                                   apiService
-                                      .addNewArtwork(artworkRequestModel)
+                                      .addNewMyfinds(myfindsRequestModel)
                                       .then((value) async {
                                     setState(() {
                                       isApiCallProcess = false;
@@ -393,7 +393,7 @@ class _ArtworkNewState extends State<ArtworkNew> {
                                 }
                               },
                               child: Text(
-                                "Add new Artwork",
+                                "Add new Find",
                                 style: TextStyle(color: Colors.white),
                               ),
                               color: Theme.of(context).accentColor,

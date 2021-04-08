@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Artwork {
+class Myfinds {
   final int id;
   final String title;
   final String description;
@@ -14,8 +14,8 @@ class Artwork {
   final String created_at;
   final String updated_at;
 
-  Artwork({
-    @required this.id, 
+  Myfinds({
+    @required this.id,
     @required this.title,
     @required this.description,
     @required this.status,
@@ -26,13 +26,11 @@ class Artwork {
     @required this.live,
     @required this.created_by,
     @required this.created_at,
-    @required this.updated_at, 
-    });
+    @required this.updated_at,
+  });
 
-
-
-  factory Artwork.fromJson(Map<String, dynamic> json) {
-    return Artwork(
+  factory Myfinds.fromJson(Map<String, dynamic> json) {
+    return Myfinds(
       id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -49,7 +47,7 @@ class Artwork {
   }
 }
 
-class ArtworkRequestModel {
+class MyfindsRequestModel {
   String title;
   String description;
   String status;
@@ -60,8 +58,8 @@ class ArtworkRequestModel {
   int live;
   int created_by;
 
-  ArtworkRequestModel({
-    this.title, 
+  MyfindsRequestModel({
+    this.title,
     this.description,
     this.status,
     this.primary_art,
@@ -74,7 +72,7 @@ class ArtworkRequestModel {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'title': title.trim(), 
+      'title': title.trim(),
       'description': description.trim(),
       'status': status,
       'primary_art': primary_art.trim(),

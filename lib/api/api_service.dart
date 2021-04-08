@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutterjb/model/artwork_model.dart';
+import 'package:flutterjb/model/myfinds_model.dart';
 import 'package:flutterjb/model/login_model.dart';
 import 'package:flutterjb/model/profile_model.dart';
 import 'package:flutterjb/model/register_model.dart';
@@ -12,7 +12,7 @@ String finalProfileEmail;
 
 class APIService {
   String url = "lookwhatfound.me";
-  // c
+  // Myfind
   final storage = new FlutterSecureStorage();
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     String endpoint = "/api/auth/login";
@@ -79,8 +79,8 @@ class APIService {
     }
   }
 
-  // GET Artwork
-  Future<List<Artwork>> fetchArtwork() async {
+  // GET Myfind
+  Future<List<Myfinds>> fetchMyfinds() async {
     String endpoint = "/api/artworks";
     String newToken = await storage.read(key: 'token');
     final response =
@@ -91,9 +91,9 @@ class APIService {
     });
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
-      List<Artwork> posts = body
+      List<Myfinds> posts = body
           .map(
-            (dynamic item) => Artwork.fromJson(item),
+            (dynamic item) => Myfinds.fromJson(item),
           )
           .toList();
 
@@ -103,8 +103,8 @@ class APIService {
     }
   }
 
-  // DELETE ARTWORK
-  Future<void> deleteArtwork(int id) async {
+  // DELETE Myfind
+  Future<void> deleteMyfinds(int id) async {
     String endpoint = "/api/artworks/$id";
     String newToken = await storage.read(key: 'token');
     final response =
@@ -120,7 +120,7 @@ class APIService {
     }
   }
 
-  Future<Artwork> addNewArtwork(ArtworkRequestModel artworkRequestModel) async {
+  Future<Myfinds> addNewMyfinds(MyfindsRequestModel myfindsRequestModel) async {
     String endpoint = "/api/artworks";
     String newToken = await storage.read(key: 'token');
     final response = await http.post(Uri.https(url, endpoint),
@@ -129,12 +129,12 @@ class APIService {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $newToken',
         },
-        body: jsonEncode(artworkRequestModel));
-    print(artworkRequestModel);
+        body: jsonEncode(myfindsRequestModel));
+    print(myfindsRequestModel);
 
     if (response.statusCode == 200 || response.statusCode == 400) {
       if (json.decode(response.body)['token'] != null) {
-        return Artwork.fromJson(json.decode(response.body));
+        return Myfinds.fromJson(json.decode(response.body));
       }
     } else {
       throw Exception('Failed to load data');

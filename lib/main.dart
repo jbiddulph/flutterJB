@@ -21,47 +21,42 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
   initState() {
-    secureStorage.readSecureData('key').then((value) => 
-      newToken = value
-    );
+    secureStorage.readSecureData('key').then((value) => newToken = value);
   }
 }
-
-
 
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        primaryColor: Colors.white,
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          elevation: 0,
-          foregroundColor: Colors.white,
-        ),
-        accentColor: Colors.redAccent,
-        textTheme: TextTheme(
-          headline1: TextStyle(fontSize: 22.0, color: Colors.redAccent),
-          headline2: TextStyle(
-            fontSize: 24.0, 
-            color: Colors.redAccent,
-            fontWeight: FontWeight.w700,
+        title: 'LookWhatFound.ME',
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+          primaryColor: Colors.white,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            elevation: 0,
+            foregroundColor: Colors.white,
           ),
-          bodyText1: TextStyle(
-            fontSize: 14.0, 
-            color: Colors.blueAccent,
-            fontWeight: FontWeight.w400,
+          accentColor: Colors.redAccent,
+          textTheme: TextTheme(
+            headline1: TextStyle(fontSize: 22.0, color: Colors.redAccent),
+            headline2: TextStyle(
+              fontSize: 24.0,
+              color: Colors.redAccent,
+              fontWeight: FontWeight.w700,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 14.0,
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
-      ),
-      home: newToken == null ? LoginPage() : Home(),
-      routes: {
-        '/register': (_) => RegisterPage(),
-        '/login': (_) => LoginPage(),
-      }
-    );
+        home: newToken == null ? LoginPage() : Home(),
+        routes: {
+          '/register': (_) => RegisterPage(),
+          '/login': (_) => LoginPage(),
+        });
   }
 }
 

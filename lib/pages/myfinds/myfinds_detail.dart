@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/pages/home.dart';
-import '../model/artwork_model.dart';
+import '../../model/myfinds_model.dart';
 
-class ArtworkDetail extends StatelessWidget {
+class MyfindsDetail extends StatelessWidget {
   APIService httpService = new APIService();
-  final Artwork artwork;
+  final Myfinds myfinds;
 
-  ArtworkDetail({@required this.artwork});
+  MyfindsDetail({@required this.myfinds});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(artwork.title),
+          title: Text(myfinds.title, style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.redAccent,
+          iconTheme: IconThemeData(color: Colors.white),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.delete),
@@ -34,27 +36,27 @@ class ArtworkDetail extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         title: Text("Title"),
-                        subtitle: Text(artwork.title),
+                        subtitle: Text(myfinds.title),
                       ),
                       ListTile(
                         title: Text("ID"),
-                        subtitle: Text("${artwork.id}"),
+                        subtitle: Text("${myfinds.id}"),
                       ),
                       ListTile(
                         title: Text("Body"),
-                        subtitle: Text(artwork.description),
+                        subtitle: Text(myfinds.description),
                       ),
                       ListTile(
                         title: Text("Created At"),
-                        subtitle: Text("${artwork.primary_art}"),
+                        subtitle: Text("${myfinds.primary_art}"),
                       ),
                       ListTile(
                         title: Text("Height"),
-                        subtitle: Text("${artwork.height}"),
+                        subtitle: Text("${myfinds.height}"),
                       ),
                       ListTile(
                         title: Text("Width"),
-                        subtitle: Text("${artwork.width}"),
+                        subtitle: Text("${myfinds.width}"),
                       ),
                     ],
                   ),
@@ -76,7 +78,7 @@ class ArtworkDetail extends StatelessWidget {
     Widget continueButton = FlatButton(
       child: Text("Continue"),
       onPressed: () async {
-        await httpService.deleteArtwork(artwork.id);
+        await httpService.deleteMyfinds(myfinds.id);
         Navigator.of(context).pop();
         Navigator.pushReplacement(
           context,
@@ -86,7 +88,7 @@ class ArtworkDetail extends StatelessWidget {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Delete Artwork"),
+      title: Text("Delete My Find"),
       content: Text("Are you sure you want to delete this item?"),
       actions: [
         cancelButton,

@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/model/login_model.dart';
-import 'package:flutterjb/services/Storage.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
 import '../progressHUD.dart';
-import 'artwork.dart';
-import 'artwork_new.dart';
+import 'myfinds/myfinds.dart';
+import 'myfinds/myfinds_new.dart';
 
 final _storage = FlutterSecureStorage();
 
@@ -59,18 +57,26 @@ class _HomeState extends State<Home> {
   }
 
   Widget _uiSetup(BuildContext context) {
+    //     var circleAvatar = new CircleAvatar(
+//             backgroundImage:
+//             final Widget networkSvg = SvgPicture.network(
+//   'http://tinygraphs.com/labs/isogrids/hexa/albert?theme=frogideas&numcolors=4&size=220&fmt=svg',
+// ));
     return Scaffold(
       appBar: new AppBar(
         title: const Text('LookWhatFound.Me',
             style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.redAccent,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: new Drawer(
           child: new ListView(children: <Widget>[
         new UserAccountsDrawerHeader(
           // controller: accountName,
-          accountName: new Text('$profileName'),
-          accountEmail: new Text('$profileEmail'),
+          accountName:
+              new Text('$profileName', style: TextStyle(color: Colors.white)),
+          accountEmail:
+              new Text('$profileEmail', style: TextStyle(color: Colors.white)),
           currentAccountPicture: new GestureDetector(
               child: new CircleAvatar(
             backgroundImage: new NetworkImage(
@@ -84,31 +90,35 @@ class _HomeState extends State<Home> {
           ),
         ),
         new ListTile(
-          title: new Text('My Finds'),
+          title: new Text('My Finds',
+              style: TextStyle(color: Colors.redAccent, fontSize: 18)),
           trailing: new Icon(Icons.arrow_upward),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => new ArtworkPage('Artwork')));
+                builder: (BuildContext context) =>
+                    new MyfindsPage('My Finds')));
           },
         ),
         new ListTile(
-          title: new Text('Add New Artwork'),
+          title: new Text('Add New Find',
+              style: TextStyle(color: Colors.redAccent, fontSize: 18)),
           trailing: new Icon(Icons.surround_sound),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => new ArtworkNew()));
+                builder: (BuildContext context) => new MyfindsNew()));
           },
         ),
         new ListTile(
-          title: new Text('Page Three'),
+          title: new Text('Page Three',
+              style: TextStyle(color: Colors.redAccent, fontSize: 18)),
           trailing: new Icon(Icons.person_add),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    new ArtworkPage('Third Page')));
+                    new MyfindsPage('Third Page')));
           },
         ),
         new Divider(),
@@ -119,7 +129,7 @@ class _HomeState extends State<Home> {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    new ArtworkPage('Third Page')));
+                    new MyfindsPage('Third Page')));
           },
         ),
         new ListTile(
