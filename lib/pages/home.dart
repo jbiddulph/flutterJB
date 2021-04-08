@@ -61,7 +61,8 @@ class _HomeState extends State<Home> {
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text('Artworx'),
+        title: const Text('LookWhatFound.Me',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.redAccent,
       ),
       drawer: new Drawer(
@@ -83,7 +84,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         new ListTile(
-          title: new Text('Page One'),
+          title: new Text('My Finds'),
           trailing: new Icon(Icons.arrow_upward),
           onTap: () {
             Navigator.of(context).pop();

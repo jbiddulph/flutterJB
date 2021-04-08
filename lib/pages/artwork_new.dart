@@ -63,7 +63,8 @@ class _ArtworkNewState extends State<ArtworkNew> {
   Widget _uiSetup(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text('Add new Artworx'),
+        title:
+            const Text('Add New Find', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.redAccent,
       ),
       key: scaffoldKey,
@@ -71,23 +72,30 @@ class _ArtworkNewState extends State<ArtworkNew> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.blueAccent,
-              backgroundImage: imageUrl != null ? NetworkImage(imageUrl) : null,
-              child: imageUrl == null
-                  ? !isloading
-                      ? Icon(
-                          Icons.person,
-                          size: 100,
-                          color: Colors.white,
-                        )
-                      : Loading(
-                          indicator: BallPulseIndicator(),
-                          size: 100.0,
-                          color: Colors.red,
-                        )
-                  : Container(),
+            SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              onTap: () => uploadImage(),
+              child: CircleAvatar(
+                radius: 100,
+                backgroundColor: Colors.white,
+                backgroundImage:
+                    imageUrl != null ? NetworkImage(imageUrl) : null,
+                child: imageUrl == null
+                    ? !isloading
+                        ? Icon(
+                            Icons.add_a_photo,
+                            size: 100,
+                            color: Colors.redAccent,
+                          )
+                        : Loading(
+                            indicator: BallPulseIndicator(),
+                            size: 100.0,
+                            color: Colors.red,
+                          )
+                    : Container(),
+              ),
             ),
             Stack(
               children: <Widget>[
@@ -397,10 +405,6 @@ class _ArtworkNewState extends State<ArtworkNew> {
             )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => uploadImage(),
-        child: Icon(Icons.add),
       ),
     );
   }

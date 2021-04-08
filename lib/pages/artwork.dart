@@ -14,14 +14,13 @@ class ArtworkPage extends StatefulWidget {
 
 class _ArtworkPageState extends State<ArtworkPage> {
   Future<Artwork> futureArtwork;
-  
 
   APIService apiService = new APIService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Posts"),
+        title: const Text('My Finds', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.redAccent,
       ),
       body: FutureBuilder(
@@ -35,8 +34,8 @@ class _ArtworkPageState extends State<ArtworkPage> {
                   .map(
                     (Artwork artwork) => ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage("${artwork.primary_art}")
-                      ),
+                          backgroundImage:
+                              NetworkImage("${artwork.primary_art}")),
                       title: Text(artwork.title),
                       subtitle: Text("${artwork.description}"),
                       onTap: () => Navigator.of(context).push(
