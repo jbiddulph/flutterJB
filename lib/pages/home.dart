@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutterjb/model/login_model.dart';
+import 'package:flutterjb/pages/allfinds/allfinds.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
 import '../progressHUD.dart';
 import 'myfinds/myfinds.dart';
@@ -111,14 +112,14 @@ class _HomeState extends State<Home> {
           },
         ),
         new ListTile(
-          title: new Text('Page Three',
+          title: new Text('All Finds',
               style: TextStyle(color: Colors.redAccent, fontSize: 18)),
           trailing: new Icon(Icons.person_add),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    new MyfindsPage('Third Page')));
+                    new AllfindsPage('All Finds')));
           },
         ),
         new Divider(),

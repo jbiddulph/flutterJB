@@ -1,47 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjb/model/finds_model.dart';
 import 'package:flutterjb/api/api_service.dart';
-import 'package:flutterjb/pages/myfinds/myfinds_detail.dart';
+import 'package:flutterjb/pages/allfinds/allfinds_detail.dart';
 
-class MyfindsPage extends StatefulWidget {
+class AllfindsPage extends StatefulWidget {
   final String pageText;
-  MyfindsPage(this.pageText);
+  AllfindsPage(this.pageText);
 
   @override
-  _MyfindsPageState createState() => _MyfindsPageState();
+  _AllfindsPageState createState() => _AllfindsPageState();
 }
 
-class _MyfindsPageState extends State<MyfindsPage> {
-  Future<Finds> futureMyfinds;
+class _AllfindsPageState extends State<AllfindsPage> {
+  Future<Finds> futureFinds;
 
   APIService apiService = new APIService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Finds', style: TextStyle(color: Colors.white)),
+        title: Text('All Finds', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.redAccent,
         iconTheme: IconThemeData(color: Colors.white),
       ),
       body: FutureBuilder(
-        future: apiService.fetchMyfinds(),
+        future: apiService.fetchAllfinds(),
         builder: (BuildContext context, AsyncSnapshot<List<Finds>> snapshot) {
           print(snapshot);
           if (snapshot.hasData) {
-            List<Finds> myfinds = snapshot.data;
+            List<Finds> finds = snapshot.data;
             return ListView(
-              children: myfinds
+              children: finds
                   .map(
-                    (Finds myfind) => ListTile(
+                    (Finds find) => ListTile(
                       leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage("${myfind.primary_art}")),
-                      title: Text(myfind.title),
-                      subtitle: Text("${myfind.description}"),
+                          backgroundImage: NetworkImage("${find.primary_art}")),
+                      title: Text(find.title),
+                      subtitle: Text("${find.description}"),
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => MyfindsDetail(
-                            myfinds: myfind,
+                          builder: (context) => AllfindsDetail(
+                            finds: find,
                           ),
                         ),
                       ),

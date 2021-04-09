@@ -1,9 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutterjb/model/myfinds_model.dart';
+import 'package:flutterjb/model/finds_model.dart';
 import 'package:flutterjb/model/login_model.dart';
 import 'package:flutterjb/model/profile_model.dart';
 import 'package:flutterjb/model/register_model.dart';
 import 'package:flutterjb/services/Storage.dart';
+import 'package:flutterjb/utils/user_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,7 +13,7 @@ String finalProfileEmail;
 
 class APIService {
   String url = "lookwhatfound.me";
-  // Myfind
+  // POST Login
   final storage = new FlutterSecureStorage();
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     String endpoint = "/api/auth/login";
@@ -30,8 +31,7 @@ class APIService {
     }
   }
 
-  getToken() async {}
-
+  // POST a new User
   Future<RegisterResponseModel> register(
       RegisterRequestModel registerRequestModel) async {
     String endpoint = "/api/auth/register";
@@ -49,7 +49,7 @@ class APIService {
     }
   }
 
-  // LOAD Profile
+  // GET Profile
   Future<Profile> loadProfile() async {
     String endpoint = "/api/auth/profile";
     String newToken = await storage.read(key: 'token');
@@ -63,14 +63,12 @@ class APIService {
     });
     if (response.statusCode == 200) {
       final SecureStorage secureStorage = SecureStorage();
-
-      // secureStorage
-      //     .readSecureData('profileId')
-      //     .then((value) => {finalProfileId = value});
-      secureStorage
-          .readSecureData('profileEmail')
-          .then((email) => {finalProfileEmail = email});
-      print('email: ${finalProfileEmail}');
+      final profilename = await UserSecureStorage.getProfileName() ?? '';
+      final profileemail = await UserSecureStorage.getProfileEmail() ?? '';
+      final profileid = await UserSecureStorage.getProfileId() ?? '';
+      print('Name: ${profilename}');
+      print('Email: ${profileemail}');
+      print('ID: ${profileid}');
       final responseJson = jsonDecode(response.body);
 
       return Profile.fromJson(responseJson);
@@ -79,8 +77,8 @@ class APIService {
     }
   }
 
-  // GET Myfind
-  Future<List<Myfinds>> fetchMyfinds() async {
+  // GET My Finds
+  Future<List<Finds>> fetchMyfinds() async {
     String endpoint = "/api/artworks";
     String newToken = await storage.read(key: 'token');
     final response =
@@ -91,9 +89,33 @@ class APIService {
     });
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
-      List<Myfinds> posts = body
+      List<Finds> posts = body
           .map(
-            (dynamic item) => Myfinds.fromJson(item),
+            (dynamic item) => Finds.fromJson(item),
+          )
+          .toList();
+
+      return posts;
+    } else {
+      throw "Unable to retrieve posts.";
+    }
+  }
+
+  // GET All Finds
+  Future<List<Finds>> fetchAllfinds() async {
+    String endpoint = "/api/allartworks";
+    String newToken = await storage.read(key: 'token');
+    final response =
+        await http.get(Uri.https(url, endpoint), headers: <String, String>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $newToken',
+    });
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      List<Finds> posts = body
+          .map(
+            (dynamic item) => Finds.fromJson(item),
           )
           .toList();
 
@@ -120,7 +142,8 @@ class APIService {
     }
   }
 
-  Future<Myfinds> addNewMyfinds(MyfindsRequestModel myfindsRequestModel) async {
+  // POST new MyFinds
+  Future<Finds> addNewMyfinds(FindsRequestModel findsRequestModel) async {
     String endpoint = "/api/artworks";
     String newToken = await storage.read(key: 'token');
     final response = await http.post(Uri.https(url, endpoint),
@@ -129,12 +152,12 @@ class APIService {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $newToken',
         },
-        body: jsonEncode(myfindsRequestModel));
-    print(myfindsRequestModel);
+        body: jsonEncode(findsRequestModel));
+    print(findsRequestModel);
 
     if (response.statusCode == 200 || response.statusCode == 400) {
       if (json.decode(response.body)['token'] != null) {
-        return Myfinds.fromJson(json.decode(response.body));
+        return Finds.fromJson(json.decode(response.body));
       }
     } else {
       throw Exception('Failed to load data');

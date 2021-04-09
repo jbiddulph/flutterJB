@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutterjb/api/api_service.dart';
-import 'package:flutterjb/model/myfinds_model.dart';
+import 'package:flutterjb/model/finds_model.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -25,7 +25,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
   String profileId;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
-  MyfindsRequestModel myfindsRequestModel;
+  FindsRequestModel findsRequestModel;
   bool isApiCallProcess = false;
   final storage = new FlutterSecureStorage();
 
@@ -33,7 +33,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
   void initState() {
     super.initState();
     init();
-    myfindsRequestModel = new MyfindsRequestModel();
+    findsRequestModel = new FindsRequestModel();
   }
 
   Future init() async {
@@ -128,7 +128,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  myfindsRequestModel.title = input,
+                                  findsRequestModel.title = input,
                               validator: (input) => input.isEmpty
                                   ? "Please enter a title "
                                   : null,
@@ -155,7 +155,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (imageUrl) =>
-                                  myfindsRequestModel.description = imageUrl,
+                                  findsRequestModel.description = imageUrl,
                               validator: (input) => input.length < 10
                                   ? "Please add a bit more "
                                   : null,
@@ -183,7 +183,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  myfindsRequestModel.status = input,
+                                  findsRequestModel.status = input,
                               decoration: new InputDecoration(
                                 hintText: 'Status 1/0',
                                 enabledBorder: UnderlineInputBorder(
@@ -209,7 +209,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                               initialValue: imageUrl,
                               keyboardType: TextInputType.text,
                               onSaved: (input) =>
-                                  myfindsRequestModel.primary_art = imageUrl,
+                                  findsRequestModel.primary_art = imageUrl,
                               // validator: (input) => input.length < 10
                               //     ? "Please add a bit more "
                               //     : null,
@@ -237,7 +237,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  myfindsRequestModel.height = int.parse(input),
+                                  findsRequestModel.height = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Height',
                                 enabledBorder: UnderlineInputBorder(
@@ -262,7 +262,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  myfindsRequestModel.width = int.parse(input),
+                                  findsRequestModel.width = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Width',
                                 enabledBorder: UnderlineInputBorder(
@@ -287,7 +287,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  myfindsRequestModel.cost = int.parse(input),
+                                  findsRequestModel.cost = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Cost',
                                 enabledBorder: UnderlineInputBorder(
@@ -312,7 +312,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  myfindsRequestModel.live = int.parse(input),
+                                  findsRequestModel.live = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Live 1/0',
                                 enabledBorder: UnderlineInputBorder(
@@ -336,8 +336,8 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             ),
                             new TextFormField(
                               keyboardType: TextInputType.text,
-                              onSaved: (input) => myfindsRequestModel
-                                  .created_by = int.parse(profileId),
+                              onSaved: (input) => findsRequestModel.created_by =
+                                  int.parse(profileId),
                               decoration: new InputDecoration(
                                 hintText: '$profileId',
                                 enabledBorder: UnderlineInputBorder(
@@ -366,7 +366,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                               ),
                               onPressed: () {
                                 if (validateAndSave()) {
-                                  print(myfindsRequestModel.toJson());
+                                  print(findsRequestModel.toJson());
 
                                   setState(() {
                                     isApiCallProcess = true;
@@ -374,7 +374,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
 
                                   APIService apiService = new APIService();
                                   apiService
-                                      .addNewMyfinds(myfindsRequestModel)
+                                      .addNewMyfinds(findsRequestModel)
                                       .then((value) async {
                                     setState(() {
                                       isApiCallProcess = false;

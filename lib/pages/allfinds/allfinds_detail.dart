@@ -3,17 +3,17 @@ import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/pages/home.dart';
 import '../../model/finds_model.dart';
 
-class MyfindsDetail extends StatelessWidget {
+class AllfindsDetail extends StatelessWidget {
   APIService httpService = new APIService();
-  final Finds myfinds;
+  final Finds finds;
 
-  MyfindsDetail({@required this.myfinds});
+  AllfindsDetail({@required this.finds});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(myfinds.title, style: TextStyle(color: Colors.white)),
+          title: Text(finds.title, style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.redAccent,
           iconTheme: IconThemeData(color: Colors.white),
           actions: <Widget>[
@@ -36,27 +36,27 @@ class MyfindsDetail extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         title: Text("Title"),
-                        subtitle: Text(myfinds.title),
+                        subtitle: Text(finds.title),
                       ),
                       ListTile(
                         title: Text("ID"),
-                        subtitle: Text("${myfinds.id}"),
+                        subtitle: Text("${finds.id}"),
                       ),
                       ListTile(
                         title: Text("Body"),
-                        subtitle: Text(myfinds.description),
+                        subtitle: Text(finds.description),
                       ),
                       ListTile(
-                        title: Text("Created At"),
-                        subtitle: Text("${myfinds.primary_art}"),
+                        title: Text("Find"),
+                        subtitle: Text("${finds.primary_art}"),
                       ),
                       ListTile(
                         title: Text("Height"),
-                        subtitle: Text("${myfinds.height}"),
+                        subtitle: Text("${finds.height}"),
                       ),
                       ListTile(
                         title: Text("Width"),
-                        subtitle: Text("${myfinds.width}"),
+                        subtitle: Text("${finds.width}"),
                       ),
                     ],
                   ),
@@ -78,7 +78,7 @@ class MyfindsDetail extends StatelessWidget {
     Widget continueButton = FlatButton(
       child: Text("Continue"),
       onPressed: () async {
-        await httpService.deleteMyfinds(myfinds.id);
+        await httpService.deleteMyfinds(finds.id);
         Navigator.of(context).pop();
         Navigator.pushReplacement(
           context,
@@ -88,7 +88,7 @@ class MyfindsDetail extends StatelessWidget {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Delete My Find"),
+      title: Text("Delete Find"),
       content: Text("Are you sure you want to delete this item?"),
       actions: [
         cancelButton,

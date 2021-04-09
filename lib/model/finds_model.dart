@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Myfinds {
+class Finds {
   final int id;
   final String title;
   final String description;
@@ -14,7 +14,7 @@ class Myfinds {
   final String created_at;
   final String updated_at;
 
-  Myfinds({
+  Finds({
     @required this.id,
     @required this.title,
     @required this.description,
@@ -29,8 +29,8 @@ class Myfinds {
     @required this.updated_at,
   });
 
-  factory Myfinds.fromJson(Map<String, dynamic> json) {
-    return Myfinds(
+  factory Finds.fromJson(Map<String, dynamic> json) {
+    return Finds(
       id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -47,7 +47,7 @@ class Myfinds {
   }
 }
 
-class MyfindsRequestModel {
+class FindsRequestModel {
   String title;
   String description;
   String status;
@@ -58,7 +58,7 @@ class MyfindsRequestModel {
   int live;
   int created_by;
 
-  MyfindsRequestModel({
+  FindsRequestModel({
     this.title,
     this.description,
     this.status,
