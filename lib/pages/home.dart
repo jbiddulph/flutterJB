@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutterjb/model/login_model.dart';
 import 'package:flutterjb/pages/allfinds/allfinds.dart';
+import 'package:flutterjb/pages/allfinds/allfinds_grid.dart';
+import 'package:flutterjb/pages/allfinds/finds.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
 import '../progressHUD.dart';
 import 'myfinds/myfinds.dart';
@@ -93,7 +95,7 @@ class _HomeState extends State<Home> {
         new ListTile(
           title: new Text('My Finds',
               style: TextStyle(color: Colors.redAccent, fontSize: 18)),
-          trailing: new Icon(Icons.arrow_upward),
+          trailing: new Icon(Icons.person_pin),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
@@ -102,24 +104,23 @@ class _HomeState extends State<Home> {
           },
         ),
         new ListTile(
+          title: new Text('All Finds',
+              style: TextStyle(color: Colors.redAccent, fontSize: 18)),
+          trailing: new Icon(Icons.search),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => new Finds()));
+          },
+        ),
+        new ListTile(
           title: new Text('Add New Find',
               style: TextStyle(color: Colors.redAccent, fontSize: 18)),
-          trailing: new Icon(Icons.surround_sound),
+          trailing: new Icon(Icons.add_location),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new MyfindsNew()));
-          },
-        ),
-        new ListTile(
-          title: new Text('All Finds',
-              style: TextStyle(color: Colors.redAccent, fontSize: 18)),
-          trailing: new Icon(Icons.person_add),
-          onTap: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    new AllfindsPage('All Finds')));
           },
         ),
         new Divider(),

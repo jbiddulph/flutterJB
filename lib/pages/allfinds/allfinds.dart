@@ -18,11 +18,6 @@ class _AllfindsPageState extends State<AllfindsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('All Finds', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.redAccent,
-        iconTheme: IconThemeData(color: Colors.white),
-      ),
       body: FutureBuilder(
         future: apiService.fetchAllfinds(),
         builder: (BuildContext context, AsyncSnapshot<List<Finds>> snapshot) {

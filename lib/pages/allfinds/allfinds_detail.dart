@@ -1,29 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/pages/home.dart';
+import 'package:flutterjb/utils/user_secure_storage.dart';
 import '../../model/finds_model.dart';
 
-class AllfindsDetail extends StatelessWidget {
-  APIService httpService = new APIService();
+class AllfindsDetail extends StatefulWidget {
   final Finds finds;
 
   AllfindsDetail({@required this.finds});
 
   @override
+  _AllfindsDetailState createState() => _AllfindsDetailState();
+}
+
+class _AllfindsDetailState extends State<AllfindsDetail> {
+  String profileId;
+  APIService httpService = new APIService();
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future init() async {
+    final profileid = await UserSecureStorage.getProfileId() ?? '';
+    setState(() {
+      profileId = profileid;
+    });
+
+    if (int.parse(profileId) == widget.finds.created_by) {
+      print('Current users item');
+    }
+    print(profileId);
+    print(widget.finds.created_by);
+  }
+
+  _getDelete() {
+    if (int.parse(profileId) == widget.finds.created_by) {
+      return <Widget>[
+        IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {
+            showAlertDialog(context);
+          },
+        )
+      ];
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(finds.title, style: TextStyle(color: Colors.white)),
+          title:
+              Text(widget.finds.title, style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.redAccent,
           iconTheme: IconThemeData(color: Colors.white),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                showAlertDialog(context);
-              },
-            )
-          ],
+          actions: _getDelete(),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -36,27 +70,31 @@ class AllfindsDetail extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         title: Text("Title"),
-                        subtitle: Text(finds.title),
+                        subtitle: Text(widget.finds.title),
                       ),
                       ListTile(
                         title: Text("ID"),
-                        subtitle: Text("${finds.id}"),
+                        subtitle: Text("${widget.finds.id}"),
                       ),
                       ListTile(
                         title: Text("Body"),
-                        subtitle: Text(finds.description),
+                        subtitle: Text(widget.finds.description),
                       ),
                       ListTile(
                         title: Text("Find"),
-                        subtitle: Text("${finds.primary_art}"),
+                        subtitle: Text("${widget.finds.primary_art}"),
                       ),
                       ListTile(
                         title: Text("Height"),
-                        subtitle: Text("${finds.height}"),
+                        subtitle: Text("${widget.finds.height}"),
                       ),
                       ListTile(
                         title: Text("Width"),
-                        subtitle: Text("${finds.width}"),
+                        subtitle: Text("${widget.finds.width}"),
+                      ),
+                      ListTile(
+                        title: Text("Created By"),
+                        subtitle: Text("${widget.finds.created_by}"),
                       ),
                     ],
                   ),
@@ -78,7 +116,7 @@ class AllfindsDetail extends StatelessWidget {
     Widget continueButton = FlatButton(
       child: Text("Continue"),
       onPressed: () async {
-        await httpService.deleteMyfinds(finds.id);
+        await httpService.deleteMyfinds(widget.finds.id);
         Navigator.of(context).pop();
         Navigator.pushReplacement(
           context,
