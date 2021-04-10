@@ -6,6 +6,8 @@ class Finds {
   final String description;
   final String status;
   final String primary_art;
+  final String latitude;
+  final String longitude;
   final int height;
   final int width;
   final int cost;
@@ -20,6 +22,8 @@ class Finds {
     @required this.description,
     @required this.status,
     @required this.primary_art,
+    @required this.latitude,
+    @required this.longitude,
     @required this.height,
     @required this.width,
     @required this.cost,
@@ -36,6 +40,8 @@ class Finds {
       description: json['description'] as String,
       status: json['status'] as String,
       primary_art: json['primary_art'] as String,
+      latitude: json['latitude'] as String,
+      longitude: json['longitude'] as String,
       height: json['height'] as int,
       width: json['width'] as int,
       cost: json['cost'] as int,
@@ -52,6 +58,8 @@ class FindsRequestModel {
   String description;
   String status;
   String primary_art;
+  String latitude;
+  String longitude;
   int height;
   int width;
   int cost;
@@ -63,6 +71,8 @@ class FindsRequestModel {
     this.description,
     this.status,
     this.primary_art,
+    this.latitude,
+    this.longitude,
     this.height,
     this.width,
     this.cost,
@@ -76,6 +86,8 @@ class FindsRequestModel {
       'description': description.trim(),
       'status': status,
       'primary_art': primary_art.trim(),
+      'latitude': latitude,
+      'longitude': longitude,
       'height': height,
       'width': width,
       'cost': cost,

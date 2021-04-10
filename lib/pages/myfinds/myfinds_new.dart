@@ -28,6 +28,8 @@ class _MyfindsNewState extends State<MyfindsNew> {
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   FindsRequestModel findsRequestModel;
   bool isApiCallProcess = false;
+  String latitudeData = "";
+  String longitudeData = "";
   final storage = new FlutterSecureStorage();
 
   @override
@@ -72,9 +74,6 @@ class _MyfindsNewState extends State<MyfindsNew> {
       opacity: 0.3,
     );
   }
-
-  String latitudeData = "";
-  String longitudeData = "";
 
   @override
   Widget _uiSetup(BuildContext context) {
@@ -209,6 +208,58 @@ class _MyfindsNewState extends State<MyfindsNew> {
                                   findsRequestModel.status = input,
                               decoration: new InputDecoration(
                                 hintText: 'Status 1/0',
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.2),
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
+                                prefixIcon: Icon(Icons.publish_rounded,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            new TextFormField(
+                              initialValue: '$latitudeData',
+                              keyboardType: TextInputType.text,
+                              onSaved: (input) =>
+                                  findsRequestModel.latitude = '$latitudeData',
+                              decoration: new InputDecoration(
+                                hintText: "$latitudeData",
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.2),
+                                  ),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ),
+                                prefixIcon: Icon(Icons.publish_rounded,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            new TextFormField(
+                              initialValue: "$longitudeData",
+                              keyboardType: TextInputType.text,
+                              onSaved: (input) => findsRequestModel.longitude =
+                                  "$longitudeData",
+                              decoration: new InputDecoration(
+                                hintText: "$longitudeData",
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Theme.of(context)
