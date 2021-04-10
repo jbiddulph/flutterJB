@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutterjb/api/api_service.dart';
 import 'package:flutterjb/model/finds_model.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
@@ -33,6 +34,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
   void initState() {
     super.initState();
     init();
+    getCurrentLocation();
     findsRequestModel = new FindsRequestModel();
   }
 
@@ -50,6 +52,18 @@ class _MyfindsNewState extends State<MyfindsNew> {
     print(profileId);
   }
 
+  getCurrentLocation() async {
+    final geoposition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      latitudeData = '${geoposition.latitude}';
+      longitudeData = '${geoposition.longitude}';
+    });
+    print(latitudeData);
+    print(longitudeData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return progressHUD(
@@ -58,6 +72,9 @@ class _MyfindsNewState extends State<MyfindsNew> {
       opacity: 0.3,
     );
   }
+
+  String latitudeData = "";
+  String longitudeData = "";
 
   @override
   Widget _uiSetup(BuildContext context) {
@@ -96,6 +113,12 @@ class _MyfindsNewState extends State<MyfindsNew> {
                           )
                     : Container(),
               ),
+            ),
+            Column(
+              children: [
+                Text(latitudeData),
+                Text(longitudeData),
+              ],
             ),
             Stack(
               children: <Widget>[
