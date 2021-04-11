@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,8 +31,8 @@ class _MyfindsNewState extends State<MyfindsNew> {
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   FindsRequestModel findsRequestModel;
   bool isApiCallProcess = false;
-  String latitudeData = "";
-  String longitudeData = "";
+  Float latitudeData;
+  Float longitudeData;
   final storage = new FlutterSecureStorage();
 
   @override
@@ -59,8 +62,8 @@ class _MyfindsNewState extends State<MyfindsNew> {
         desiredAccuracy: LocationAccuracy.high);
 
     setState(() {
-      latitudeData = '${geoposition.latitude}';
-      longitudeData = '${geoposition.longitude}';
+      latitudeData = geoposition.latitude as Float;
+      longitudeData = geoposition.longitude as Float;
     });
     print(latitudeData);
     print(longitudeData);
@@ -114,10 +117,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
               ),
             ),
             Column(
-              children: [
-                Text(latitudeData),
-                Text(longitudeData),
-              ],
+              children: [],
             ),
             Stack(
               children: <Widget>[
@@ -230,8 +230,8 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               initialValue: '$latitudeData',
                               keyboardType: TextInputType.text,
-                              onSaved: (input) =>
-                                  findsRequestModel.latitude = '$latitudeData',
+                              onSaved: (input) => findsRequestModel.latitude =
+                                  latitudeData as double,
                               decoration: new InputDecoration(
                                 hintText: "$latitudeData",
                                 enabledBorder: UnderlineInputBorder(
@@ -257,7 +257,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                               initialValue: "$longitudeData",
                               keyboardType: TextInputType.text,
                               onSaved: (input) => findsRequestModel.longitude =
-                                  "$longitudeData",
+                                  longitudeData as double,
                               decoration: new InputDecoration(
                                 hintText: "$longitudeData",
                                 enabledBorder: UnderlineInputBorder(

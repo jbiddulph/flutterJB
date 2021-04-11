@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
 class Finds {
@@ -6,8 +7,8 @@ class Finds {
   final String description;
   final String status;
   final String primary_art;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
   final int height;
   final int width;
   final int cost;
@@ -40,8 +41,8 @@ class Finds {
       description: json['description'] as String,
       status: json['status'] as String,
       primary_art: json['primary_art'] as String,
-      latitude: json['latitude'] as String,
-      longitude: json['longitude'] as String,
+      latitude: json['latitude'] as double,
+      longitude: json['longitude'] as double,
       height: json['height'] as int,
       width: json['width'] as int,
       cost: json['cost'] as int,
@@ -58,8 +59,8 @@ class FindsRequestModel {
   String description;
   String status;
   String primary_art;
-  String latitude;
-  String longitude;
+  double latitude;
+  double longitude;
   int height;
   int width;
   int cost;
