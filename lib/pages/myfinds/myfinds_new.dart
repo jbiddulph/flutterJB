@@ -489,7 +489,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
   Future uploadImage() async {
     const url = "https://api.cloudinary.com/v1_1/defb2mzmx/upload";
     // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
 
     setState(() {
       isloading = true;

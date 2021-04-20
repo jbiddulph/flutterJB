@@ -12,8 +12,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AllfindsDetail extends StatefulWidget {
   final Finds finds;
-  // static Float lat;
-  // static double long;
 
   AllfindsDetail({@required this.finds});
 
@@ -33,6 +31,12 @@ class _AllfindsDetailState extends State<AllfindsDetail> {
     init();
   }
 
+  Completer<GoogleMapController> _controller = Completer();
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(latitude, longitude),
+    zoom: 12.4746,
+  );
+
   Future init() async {
     final profileid = await UserSecureStorage.getProfileId() ?? '';
     latitude = widget.finds.latitude as double;
@@ -45,15 +49,9 @@ class _AllfindsDetailState extends State<AllfindsDetail> {
       print('Current users item');
     }
     print(profileId);
-    print('LAtitude: $latitude');
-    print('Longitude: $longitude');
+    // print('LAtitude: $latitude');
+    // print('Longitude: $longitude');
   }
-
-  Completer<GoogleMapController> _controller = Completer();
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(latitude, longitude),
-    zoom: 12.4746,
-  );
 
   _getDelete() {
     if (int.parse(profileId) == widget.finds.created_by) {
@@ -77,15 +75,48 @@ class _AllfindsDetailState extends State<AllfindsDetail> {
         iconTheme: IconThemeData(color: Colors.white),
         actions: _getDelete(),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: <Widget>[
+              Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("Title"),
+                      subtitle: Text(widget.finds.title),
+                    ),
+                    ListTile(
+                      title: Text("ID"),
+                      subtitle: Text("${widget.finds.id}"),
+                    ),
+                    ListTile(
+                      title: Text("Body"),
+                      subtitle: Text(widget.finds.description),
+                    ),
+                    ListTile(
+                      title: Text("Find"),
+                      subtitle: Text("${widget.finds.primary_art}"),
+                    ),
+                    ListTile(
+                      title: Text("Height"),
+                      subtitle: Text("${widget.finds.height}"),
+                    ),
+                    ListTile(
+                      title: Text("Width"),
+                      subtitle: Text("${widget.finds.width}"),
+                    ),
+                    ListTile(
+                      title: Text("Created By"),
+                      subtitle: Text("${widget.finds.created_by}"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -93,8 +124,8 @@ class _AllfindsDetailState extends State<AllfindsDetail> {
           context,
           MaterialPageRoute(
             builder: (context) => AllfindsLocationdetail(
-                latitude: '${widget.finds.latitude}',
-                longitude: '${widget.finds.longitude}'),
+                latitude: widget.finds.latitude,
+                longitude: widget.finds.longitude),
           ),
         ),
         label: Text('Location!'),
