@@ -361,31 +361,6 @@ class _MyfindsNewState extends State<MyfindsNew> {
                             new TextFormField(
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
-                                  findsRequestModel.cost = int.parse(input),
-                              decoration: new InputDecoration(
-                                hintText: 'Cost',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context)
-                                        .accentColor
-                                        .withOpacity(0.2),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                ),
-                                prefixIcon: Icon(Icons.horizontal_rule,
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            new TextFormField(
-                              keyboardType: TextInputType.number,
-                              onSaved: (input) =>
                                   findsRequestModel.live = int.parse(input),
                               decoration: new InputDecoration(
                                 hintText: 'Live 1/0',
