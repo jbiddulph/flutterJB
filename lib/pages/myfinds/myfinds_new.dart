@@ -23,16 +23,18 @@ class MyfindsNew extends StatefulWidget {
   _MyfindsNewState createState() => _MyfindsNewState();
 }
 
+String profileName;
+String profileEmail;
+String profileId;
+double latitudeData;
+double longitudeData;
+
 class _MyfindsNewState extends State<MyfindsNew> {
-  String profileName;
-  String profileEmail;
-  String profileId;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   FindsRequestModel findsRequestModel;
   bool isApiCallProcess = false;
-  Float latitudeData;
-  Float longitudeData;
+
   final storage = new FlutterSecureStorage();
 
   @override
@@ -62,8 +64,8 @@ class _MyfindsNewState extends State<MyfindsNew> {
         desiredAccuracy: LocationAccuracy.high);
 
     setState(() {
-      latitudeData = geoposition.latitude as Float;
-      longitudeData = geoposition.longitude as Float;
+      latitudeData = geoposition.latitude;
+      longitudeData = geoposition.longitude;
     });
     print(latitudeData);
     print(longitudeData);
@@ -228,12 +230,12 @@ class _MyfindsNewState extends State<MyfindsNew> {
                               height: 20,
                             ),
                             new TextFormField(
-                              initialValue: '$latitudeData',
+                              initialValue: "${latitudeData}",
                               keyboardType: TextInputType.text,
-                              onSaved: (input) => findsRequestModel.latitude =
-                                  latitudeData as double,
+                              onSaved: (input) =>
+                                  findsRequestModel.latitude = latitudeData,
                               decoration: new InputDecoration(
-                                hintText: "$latitudeData",
+                                hintText: "${latitudeData}",
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Theme.of(context)
@@ -246,7 +248,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                                     color: Theme.of(context).accentColor,
                                   ),
                                 ),
-                                prefixIcon: Icon(Icons.publish_rounded,
+                                prefixIcon: Icon(Icons.location_on,
                                     color: Theme.of(context).accentColor),
                               ),
                             ),
@@ -254,10 +256,10 @@ class _MyfindsNewState extends State<MyfindsNew> {
                               height: 20,
                             ),
                             new TextFormField(
-                              initialValue: "$longitudeData",
+                              initialValue: "${longitudeData}",
                               keyboardType: TextInputType.text,
-                              onSaved: (input) => findsRequestModel.longitude =
-                                  longitudeData as double,
+                              onSaved: (input) =>
+                                  findsRequestModel.longitude = longitudeData,
                               decoration: new InputDecoration(
                                 hintText: "$longitudeData",
                                 enabledBorder: UnderlineInputBorder(
@@ -272,7 +274,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                                     color: Theme.of(context).accentColor,
                                   ),
                                 ),
-                                prefixIcon: Icon(Icons.publish_rounded,
+                                prefixIcon: Icon(Icons.location_on,
                                     color: Theme.of(context).accentColor),
                               ),
                             ),
@@ -464,7 +466,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
   Future uploadImage() async {
     const url = "https://api.cloudinary.com/v1_1/defb2mzmx/upload";
     // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       isloading = true;
