@@ -11,7 +11,6 @@ class Finds {
   final double longitude;
   final int height;
   final int width;
-  final double cost;
   final int live;
   final int created_by;
   final String created_at;
@@ -27,7 +26,6 @@ class Finds {
     @required this.longitude,
     @required this.height,
     @required this.width,
-    @required this.cost,
     @required this.live,
     @required this.created_by,
     @required this.created_at,
@@ -45,7 +43,6 @@ class Finds {
       longitude: json['longitude'] as double,
       height: json['height'] as int,
       width: json['width'] as int,
-      cost: json['cost'] as double,
       live: json['live'] as int,
       created_by: json['created_by'] as int,
       created_at: json['created_at'] as String,
@@ -63,7 +60,6 @@ class FindsRequestModel {
   double longitude;
   int height;
   int width;
-  double cost;
   int live;
   int created_by;
 
@@ -76,7 +72,6 @@ class FindsRequestModel {
     this.longitude,
     this.height,
     this.width,
-    this.cost,
     this.live,
     this.created_by,
   });
@@ -91,7 +86,6 @@ class FindsRequestModel {
       'longitude': longitude,
       'height': height,
       'width': width,
-      'cost': cost,
       'live': live,
       'created_by': created_by,
     };

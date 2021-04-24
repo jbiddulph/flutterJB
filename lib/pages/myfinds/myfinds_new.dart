@@ -26,6 +26,7 @@ class MyfindsNew extends StatefulWidget {
 String profileName;
 String profileEmail;
 String profileId;
+double cost;
 double latitudeData;
 double longitudeData;
 
@@ -66,6 +67,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
     setState(() {
       latitudeData = geoposition.latitude;
       longitudeData = geoposition.longitude;
+      cost = 0.00;
     });
     print(latitudeData);
     print(longitudeData);
@@ -361,32 +363,7 @@ class _MyfindsNewState extends State<MyfindsNew> {
                               height: 20,
                             ),
                             new TextFormField(
-                              keyboardType: TextInputType.number,
-                              onSaved: (input) =>
-                                  findsRequestModel.cost = input as double,
-                              decoration: new InputDecoration(
-                                hintText: 'Cost',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context)
-                                        .accentColor
-                                        .withOpacity(0.2),
-                                  ),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                ),
-                                prefixIcon: Icon(Icons.horizontal_rule,
-                                    color: Theme.of(context).accentColor),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            new TextFormField(
-                              initialValue: "1",
+                              initialValue: "0",
                               keyboardType: TextInputType.number,
                               onSaved: (input) =>
                                   findsRequestModel.live = int.parse(input),

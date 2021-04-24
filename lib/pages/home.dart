@@ -6,6 +6,7 @@ import 'package:flutterjb/pages/allfinds/allfinds.dart';
 import 'package:flutterjb/pages/allfinds/allfinds_grid.dart';
 import 'package:flutterjb/pages/allfinds/finds.dart';
 import 'package:flutterjb/utils/user_secure_storage.dart';
+import 'package:geolocator/geolocator.dart';
 import '../progressHUD.dart';
 import 'myfinds/myfinds.dart';
 import 'myfinds/myfinds_new.dart';
@@ -23,6 +24,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String LatitudeData = "";
+  String LongitudeData = "";
   String profileName;
   String profileEmail;
   String profileId;
@@ -37,12 +40,24 @@ class _HomeState extends State<Home> {
     super.initState();
     loginRequestModel = new LoginRequestModel();
     init();
+    getCurrentLocation();
+  }
+
+  getCurrentLocation() async {
+    final geoposition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+
+    setState(() {
+      LatitudeData = '${geoposition.latitude}';
+      LongitudeData = '${geoposition.longitude}';
+    });
   }
 
   Future init() async {
     final profilename = await UserSecureStorage.getProfileName() ?? '';
     final profileemail = await UserSecureStorage.getProfileEmail() ?? '';
     final profileid = await UserSecureStorage.getProfileId() ?? '';
+    
     setState(() {
       profileName = profilename;
       profileEmail = profileemail;
@@ -167,7 +182,11 @@ class _HomeState extends State<Home> {
                           children: <Widget>[
                             SizedBox(height: 25),
                             Text(
-                              'HomePage',
+                              LatitudeData,
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                            Text(
+                              LongitudeData,
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(

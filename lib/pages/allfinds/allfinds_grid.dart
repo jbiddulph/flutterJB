@@ -29,13 +29,21 @@ class _AllfindsGridState extends State<AllfindsGrid> {
               crossAxisSpacing: 10.0,
               crossAxisCount: 3,
               children: finds
-                  .map(
-                    (Finds find) => Container(
-                      child: Container(
-                        decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                              image: new NetworkImage("${find.primary_art}"),
-                              fit: BoxFit.cover),
+                  .map((Finds find) => GestureDetector(
+                      child: GridTile(
+                        child: Container(
+                          decoration: new BoxDecoration(
+                            image: new DecorationImage(
+                                image: new NetworkImage("${find.primary_art}"),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                      ),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => AllfindsDetail(
+                            finds: find,
+                          ),
                         ),
                       ),
                     ),
