@@ -47,7 +47,7 @@ class _AllfindsGridState extends State<AllfindsGrid> {
                         ),
                       ),
                     ),
-                  )
+                    )
                   .toList(),
             );
           } else {

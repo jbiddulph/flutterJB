@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutterjb">
    <application
-        android.name="com.google.android.geo.API_KEY"
+        android.name="com.google.android.geo.AIzaSyAmjrq1SnKU_4cTlbOsSALZGsradVP3Rfg"
         android.value="AIzaSyAmjrq1SnKU_4cTlbOsSALZGsradVP3Rfg"
         android:label="flutterjb"
         android:icon="@mipmap/ic_launcher">
